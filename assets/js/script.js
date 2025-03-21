@@ -1,6 +1,41 @@
 (function() {
   "use strict";
 
+  document.addEventListener("DOMContentLoaded", function () {
+    // Selecciona todos los enlaces del menú de navegación
+    const navLinks = document.querySelectorAll("nav a");
+  
+    // Recorre cada enlace
+    navLinks.forEach((link) => {
+      link.addEventListener("click", function (event) {
+        // Evita el comportamiento predeterminado del enlace
+        event.preventDefault();
+  
+        // Obtiene la ruta del enlace (sin el dominio)
+        const path = link.getAttribute("href");
+  
+        // Redirige a la página correspondiente con .html
+        window.location.href = `${path}.html`;
+      });
+    });
+  });
+  
+  document.addEventListener("DOMContentLoaded", function () {
+    const navLinks = document.getElementById("navigation-link");
+  
+    navLinks.addEventListener("click", function (event) {
+        // Evita el comportamiento predeterminado del enlace
+        event.preventDefault();
+  
+        // Obtiene la ruta del enlace (sin el dominio)
+        const path = navLinks.getAttribute("href");
+  
+        // Redirige a la página correspondiente con .html
+        window.location.href = `${path}.html`;
+      });
+
+  });
+
   /**
    * Apply .scrolled class to the body as the page is scrolled down
    */
@@ -128,9 +163,5 @@
 
   window.addEventListener("load", initSwiper);
 
-  /**
-   * Initiate Pure Counter
-   */
-  new PureCounter();
 
 })();
