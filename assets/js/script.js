@@ -1,40 +1,49 @@
 (function() {
   "use strict";
 
-  document.addEventListener("DOMContentLoaded", function () {
-    // Selecciona todos los enlaces del menú de navegación
-    const navLinks = document.querySelectorAll("nav a");
-  
-    // Recorre cada enlace
-    navLinks.forEach((link) => {
-      link.addEventListener("click", function (event) {
-        // Evita el comportamiento predeterminado del enlace
-        event.preventDefault();
-  
-        // Obtiene la ruta del enlace (sin el dominio)
-        const path = link.getAttribute("href");
-  
-        // Redirige a la página correspondiente con .html
-        window.location.href = `${path}.html`;
-      });
-    });
-  });
-  
-  document.addEventListener("DOMContentLoaded", function () {
-    const navLinks = document.getElementById("navigation-link");
-  
-    navLinks.addEventListener("click", function (event) {
-        // Evita el comportamiento predeterminado del enlace
-        event.preventDefault();
-  
-        // Obtiene la ruta del enlace (sin el dominio)
-        const path = navLinks.getAttribute("href");
-  
-        // Redirige a la página correspondiente con .html
-        window.location.href = `${path}.html`;
-      });
+  // Función para determinar si estás en local o en el repositorio remoto
+  function isLocalEnvironment() {
+    return window.location.hostname === "localhost" || window.location.hostname === "127.0.0.1";
+  }
 
-  });
+  // Función para ajustar los enlaces según el entorno
+  function adjustLinks() {
+    const links = document.querySelectorAll("a"); // Selecciona todos los enlaces
+
+    links.forEach((link) => {
+      const href = link.getAttribute("href");
+
+      // Si el enlace es relativo (no comienza con http o /)
+      if (href && !href.startsWith("http")) {
+        if (isLocalEnvironment()) {
+          // En local, agrega .html a los enlaces
+          link.setAttribute("href", `${href}.html`);
+        } else {
+          // En el repositorio remoto, mantén los enlaces sin .html
+          link.setAttribute("href", href);
+        }
+      }
+    });
+  }
+
+  // Ejecuta la función cuando el DOM esté listo
+  document.addEventListener("DOMContentLoaded", adjustLinks);
+
+    /**
+   * Navigation active
+   */
+  function isActive() {
+    const activePage = window.location.pathname
+    const navLinks = document.querySelectorAll("nav a");
+   
+
+    navLinks.forEach(link => link.href.includes(activePage) ?
+      link.classList.add("active") : link.classList.remove("active")
+      
+    )
+  }
+  // Ejecuta la función cuando el DOM esté listo
+  document.addEventListener("DOMContentLoaded", isActive);
 
   /**
    * Apply .scrolled class to the body as the page is scrolled down
@@ -162,6 +171,5 @@
   }
 
   window.addEventListener("load", initSwiper);
-
 
 })();
