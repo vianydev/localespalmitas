@@ -37,11 +37,11 @@
     const navLinks = document.querySelectorAll("nav a");
    
 
-    navLinks.forEach(link => link.href.includes(activePage) ?
-      link.classList.add("active") : link.classList.remove("active")
-      
-    )
+    navLinks.forEach(link => 
+      link.pathname === activePage || link.pathname === `${activePage}.html` ?
+        link.classList.add("active") : link.classList.remove("active"))
   }
+
   // Ejecuta la función cuando el DOM esté listo
   document.addEventListener("DOMContentLoaded", isActive);
 
